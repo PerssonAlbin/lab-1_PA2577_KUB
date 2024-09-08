@@ -12,6 +12,11 @@ jobs:
       - name: code checkout
         uses: actions/checkout@v2
 
+      - name: authenticate google cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
       - name: install the gcloud cli
         uses: google-github-actions/setup-gcloud@v2
         with:
