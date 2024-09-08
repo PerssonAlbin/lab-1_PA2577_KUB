@@ -19,5 +19,5 @@ jobs:
           GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
         run:
           gcloud auth configure-docker eu-west1-docker.pkg.dev
-        docker build -t europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1:latest ./nuxt-k8s
+          docker build -t europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1:latest ./nuxt-k8s
           docker push europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1:latest
