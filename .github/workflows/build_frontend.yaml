@@ -3,7 +3,7 @@ name: Deploy front-end
 on:
   push:
     branches:
-      - 'main'
+      - "main"
 
 jobs:
   deploy:
@@ -27,6 +27,5 @@ jobs:
           GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
         run: |
           gcloud auth configure-docker europe-west1-docker.pkg.dev
-          docker build -t europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1/nuxt-k8s:latest ./nuxt-k8s
-          docker push europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1/nuxt-k8s:latest
-
+          docker build -t europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1/nuxt3:latest ./frontend
+          docker push europe-west1-docker.pkg.dev/$GOOGLE_PROJECT/lab-1/nuxt3:latest
