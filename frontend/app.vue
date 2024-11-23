@@ -26,7 +26,7 @@ export default {
       const formData = new FormData(form);
 
       axios
-        .post("http://localhost:3000/upload", formData, {
+        .post("http://backend-service:3000/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

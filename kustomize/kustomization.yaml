@@ -9,6 +9,8 @@ commonAnnotations:
 resources:
   - frontend/deployment.yaml
   - frontend/service.yaml
+  - backend/deployment.yaml
+  - backend/service.yaml
   - database/postgres-configmap.yaml
   - database/psql-pv.yaml
   - database/psql-claim.yaml
