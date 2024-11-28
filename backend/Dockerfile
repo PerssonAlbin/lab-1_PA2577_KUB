@@ -1,20 +1,20 @@
-# Build Stage
-FROM node:lts-alpine as build-stage
+# Use the official Node.js image
+FROM node:22-alpine
 
-#ENV NODE_ENV=production
-ENV APP_HOME=/usr/src/app
+# Set working directory
+WORKDIR /app
 
-RUN mkdir -p $APP_HOME
+# Copy package files
+COPY package*.json ./
 
-COPY . $APP_HOME
+# Install dependencies
+RUN npm install
 
-RUN cd $APP_HOME && npm install \
-  --prefer-offline \
-  --pure-lockfile \
-  --non-interactive
+# Copy the rest of the application
+COPY . .
 
-WORKDIR $APP_HOME
+# Expose the port
+EXPOSE 4000
 
-EXPOSE 3000
-
+# Start the application
 CMD ["node", "index.js"]

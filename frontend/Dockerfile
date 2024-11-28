@@ -1,30 +1,21 @@
-# Build Stage
-FROM node:lts-alpine as build-stage
+FROM node:22-alpine AS builder
 
-#ENV NODE_ENV=production
-ENV APP_HOME=/usr/src/app
+WORKDIR /app
 
-RUN mkdir -p $APP_HOME
+COPY package*.json ./
 
-COPY . $APP_HOME
+RUN npm install
 
-RUN cd $APP_HOME && npm install \
-  --prefer-offline \
-  --pure-lockfile \
-  --non-interactive
-
-WORKDIR $APP_HOME
+COPY . .
 
 RUN npm run generate
 
-# Production Stage
-FROM nginx:stable-alpine as production-stage
 
-ENV APP_HOME=/usr/src/app
+FROM nginx:alpine
 
-COPY --from=build-stage $APP_HOME/.output/public /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-RUN chown nginx:nginx /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
