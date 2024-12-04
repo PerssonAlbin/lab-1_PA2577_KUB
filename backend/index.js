@@ -1,51 +1,56 @@
-// index.js
-const express = require("express");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+const express = require('express');
+const axios = require('axios');
+const multer = require('multer');
+const FormData = require('form-data');
+const upload = multer();
 
-// Create an instance of Express
 const app = express();
+const port = process.env.PORT || 4000;
 
-// Set the folder where files will be stored
-// Shall be changed later
-const uploadFolder = path.join(__dirname, "uploads");
+app.use(express.json());
 
-// Ensure the upload folder exists
-if (!fs.existsSync(uploadFolder)) {
-  fs.mkdirSync(uploadFolder);
-}
+const transcriberServiceUrl = process.env.TRANSCRIBER_SERVICE_URL || 'http://transcriber-service:8000';
+const narratorServiceUrl = process.env.NARRATOR_SERVICE_URL || 'http://narrator-service:8000';
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadFolder); // Store in the 'uploads' directory
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + "-" + file.originalname); // Create a unique filename
-  },
+app.post('/transcribe', upload.single('audio_file'), async (req, res) => {
+    try {
+        const formData = new FormData();
+        formData.append('audio_file', req.file.buffer, {
+            filename: req.file.originalname,
+            contentType: req.file.mimetype,
+        });
+
+        const response = await axios.post(`${transcriberServiceUrl}/transcribe`, formData, {
+            headers: formData.getHeaders(),
+        });
+
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error in /transcribe:', error);
+        res.status(500).json({ error: 'Error processing transcription' });
+    }
 });
 
-const upload = multer({ storage: storage });
-
-// Create a POST route to handle the file upload
-app.post("/upload", upload.single("file"), (req, res) => {
-  // The file is available as req.file
-  if (!req.file) {
-    return res.status(400).send({ message: "No file uploaded" });
-  }
-
-  // Send success response
-  res.status(200).send({
-    message: "File uploaded successfully",
-    fileName: req.file.filename,
-    filePath: req.file.path,
-  });
+app.post('/narrate', async (req, res) => {
+    try {
+        const response = await axios.post(`${narratorServiceUrl}/narrate`, req.body, {
+            responseType: 'arraybuffer',
+        });
+        res.set('Content-Type', 'audio/mpeg');
+        res.send(response.data);
+    } catch (error) {
+        let errorData;
+        if (error.response && error.response.data) {
+            errorData = Buffer.from(error.response.data).toString('utf-8');
+        } else {
+            errorData = error.message;
+        }
+        console.error('Error in /narrate:', errorData);
+        res.status(500).json({ error: 'Error processing narration' });
+    }
 });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+app.listen(port, () => {
+    console.log(`Backend listening at http://localhost:${port}`);
 });
