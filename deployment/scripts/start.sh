@@ -16,7 +16,7 @@ eval $(minikube -p bslab docker-env)
 
 # Build Docker images inside Minikube's Docker daemon
 echo "Building Docker images..."
-docker build -t nuxt-frontend:latest ./frontend
+docker build -t nuxt-frontend:latest ./frontend2
 docker build -t express-backend:latest ./backend
 docker build -t transcriber-service:latest ./transcriber
 docker build -t narrator-service:latest ./narrator
