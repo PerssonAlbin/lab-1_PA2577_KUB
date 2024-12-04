@@ -2,11 +2,15 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 import openai
 import logging
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
 
 # Set your OpenAI API key
-openai.api_key = None
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 @app.post("/transcribe")
