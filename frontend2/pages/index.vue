@@ -18,7 +18,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useFetch } from '#app'
 
 const mediaRecorder = ref(null)
 const audioChunks = ref([])
@@ -36,11 +35,9 @@ const startRecording = async () => {
 			mediaRecorder.value = new MediaRecorder(stream)
 			mediaRecorder.value.start()
 			isRecording.value = true
-
 			mediaRecorder.value.ondataavailable = (e) => {
 				audioChunks.value.push(e.data)
 			}
-
 			mediaRecorder.value.onstop = sendAudioForTranscription
 		} catch (error) {
 			alert('Could not access microphone: ' + error)
@@ -58,54 +55,30 @@ const stopRecording = () => {
 }
 
 const sendAudioForTranscription = async () => {
-	const audioBlob = new Blob(audioChunks.value, { type: 'audio/mpeg' })
+	const audioBlob = new Blob(audioChunks.value, { type: 'audio/wav' })
 	audioChunks.value = []
-
 	const formData = new FormData()
-	formData.append('audio_file', audioBlob, 'recording.mpeg')
+	formData.append('audio_file', audioBlob, 'recording.wav')
 
-	try {
-		const { data } = await useFetch('/api/transcribe', {
-			method: 'POST',
-			body: formData,
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		})
+	// Note: No explicit 'Content-Type' header for multipart/form-data
+	const response = await $fetch('/api/transcribe', {
+		method: 'POST',
+		body: formData,
+	})
 
-		transcribedText.value = data.value.transcription
-	} catch (error) {
-		console.error('Error transcribing audio:', error)
-		alert('Error transcribing audio.')
-	}
+	transcribedText.value = response.transcription
 }
 
 const narrateText = async () => {
-	try {
-		const { data } = await useFetch('/api/narrate', {
-			method: 'POST',
-			body: JSON.stringify({ text: inputText.value }),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			responseType: 'blob'
-		})
+	// Use rawResponse to handle binary data
+	const response = await $fetch('/api/narrate', {
+		method: 'POST',
+		body: { text: inputText.value },
+		responseType: 'arrayBuffer'
+	})
 
-		audioSrc.value = URL.createObjectURL(data.value)
-	} catch (error) {
-		console.error('Error narrating text:', error)
-		alert('Error narrating text.')
-	}
-}
-
-const base64ToBlob = (base64, type) => {
-	const byteCharacters = atob(base64)
-	const byteNumbers = new Array(byteCharacters.length)
-	for (let i = 0; i < byteCharacters.length; i++) {
-		byteNumbers[i] = byteCharacters.charCodeAt(i)
-	}
-	const byteArray = new Uint8Array(byteNumbers)
-	return new Blob([byteArray], { type: type })
+	const audioBlob = new Blob([response], { type: 'audio/mpeg' })
+	audioSrc.value = URL.createObjectURL(audioBlob)
 }
 </script>
 
