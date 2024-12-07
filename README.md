@@ -8,9 +8,9 @@ Briefly describe the purpose of the application here.
 - **What problems does it solve?**
 
 ## Features at a Glance
-- **Modern UI with Nuxt 3 Frontend**  
-- **Robust Backend with Express.js**  
-- **Scalable Data Storage via Postgres**  
+- **Nuxt 3 Frontend**  
+- **Express.js Backend**  
+- **Postgres Data Storage**  
 - **Specialized Microservices (FastAPI)** for:
   - Transcription  
   - Narration
@@ -22,7 +22,7 @@ Provide a high-level description of the architecture. For example:
 - The frontend (Nuxt 3) communicates with the backend (Express) via RESTful APIs.  
 - The backend orchestrates communication with the Postgres database and the two microservices.  
 - The two microservices (Transcription & Narration), built with FastAPI, run independently and scale independently.  
-- The entire system runs on Kubernetes for scalability, resilience, and ease of deployment.  
+- The entire system runs on Kubernetes which provides scalability, resilience, and ease of deployment.  
 
 *(Consider including a diagram here if possible.)*
 
@@ -45,9 +45,7 @@ Provide a high-level description of the architecture. For example:
 ### Architecture Principles Used
 - **Microservices Pattern:** Each service is independent, allowing scaling and updates without affecting others.  
 - **API Gateway Pattern:** The backend (Express) acts like a gateway, simplifying interactions for the frontend.  
-- **Containerization & Orchestration (Kubernetes):** Enables easy scaling, rolling updates, and consistent environments.  
-- **Stateless Services:** Microservices designed to be stateless for easier scaling.  
-- **Service Discovery & Load Balancing:** Kubernetes manages service discovery and distribution of requests.
+- **Containerization & Orchestration:** Enables easy scaling, rolling updates, and consistent environments.
 
 ## Benefits & Challenges
 
@@ -63,13 +61,9 @@ Provide a high-level description of the architecture. For example:
 - **Security & Access Control:** Ensuring secure communication between services, protecting data in transit and at rest, and managing authentication/authorization can be complex.
 
 ### Security Considerations
-- **Data Encryption:** Use TLS/SSL for communications between frontend, backend, and microservices.  
-- **Secrets Management:** Store credentials (DB credentials, API keys) in secure services (e.g., Kubernetes Secrets).  
-- **Authentication & Authorization:** Implement role-based access and secure endpoints with JWT or OAuth.  
-- **Monitoring & Auditing:** Log requests, errors, and access attempts. Consider intrusion detection tools.
+- **Secrets Management:**
 
-### Mitigation Strategies
-- **Infrastructure as Code (IaC):** Streamline deployments and reduce misconfigurations.  
+### Possible Mitigation Strategies
 - **Automated CI/CD Pipelines:** Quickly test and deploy changes, ensuring quality and security checks are in place.  
 - **Caching and Load Balancing:** Improve performance and reduce latency by strategically caching responses.  
 - **Rate Limiting & Throttling:** Protect services from overload and potential DDoS attacks.
@@ -82,9 +76,5 @@ Provide a high-level description of the architecture. For example:
 ## Getting Started (Optional)
 - **Prerequisites:** Tools and versions required.  
 - **Installation & Deployment Instructions:** Steps to run locally or deploy to Kubernetes.
-
-## Contact & Support
-- Mention where users can get help or report issues.  
-- Include any relevant documentation links, Slack channels, or emails.
 
 **Happy coding!** ✨
