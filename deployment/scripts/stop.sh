@@ -13,7 +13,8 @@ eval $(minikube docker-env -u)
 
 # Delete Kubernetes resources
 echo "Deleting Kubernetes resources..."
-kubectl delete -f deployment/manifests -n bslab --ignore-not-found
+kubectl delete -f deployment/manifests/deployments -n bslab --ignore-not-found
+kubectl delete -f deployment/manifests/services -n bslab --ignore-not-found
 
 # Stop Minikube
 minikube stop -p bslab

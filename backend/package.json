@@ -17,8 +17,9 @@
     "express": "^4.21.1",
     "form-data": "^4.0.0",
     "multer": "^1.4.3",
-    "sequelize": "^6.37.5",
     "pg": "^8.13.1",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "pg-promise": "^11.10.2",
+    "sequelize": "^6.37.5"
   }
 }

@@ -22,17 +22,3 @@ spec:
           env:
             - name: DATABASE_URL
               value: postgres://user:password@database-service:5432/mydb
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend-service
-  namespace: bslab
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: 4000
-      targetPort: 4000
-  type: ClusterIP
