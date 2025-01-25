@@ -19,7 +19,7 @@ The use case is quite broad and therefore could be used by most people
 - The two microservices (Transcription & Narration), built with FastAPI, run independently and scale independently.
 - The entire system runs on Kubernetes which provides scalability, resilience, and ease of deployment.
 
-<img src="drawing.jpg" alt="drawing" width="200"/>
+<img src="arch.png" alt="drawing" width="400"/>
 
 ### Components and Their Responsibilities
 - **Frontend (Nuxt 3):**
