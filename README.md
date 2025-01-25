@@ -19,7 +19,7 @@ The use case is quite broad and therefore could be used by most people
 - The two microservices (Transcription & Narration), built with FastAPI, run independently and scale independently.
 - The entire system runs on Kubernetes which provides scalability, resilience, and ease of deployment.
 
-<img src="arch.png" alt="drawing" width="400"/>
+<img src="drawing.jpg" alt="drawing" width="200"/>
 
 ### Components and Their Responsibilities
 - **Frontend (Nuxt 3):**
@@ -59,10 +59,10 @@ Generates audio narrations from given text, returning audio.
 - **Caching and Load Balancing:** Performance can be improved and latency reduced byby strategically caching responses. xxx
 - **Rate Limiting & Throttling:** Automatic scaling can be dangerous without enforced limits. especially in systems accessible by many.
 
-## Conclusion & Future Work --------------------xxx
-- Summarize the key points of the architecture and its purpose.
-- Highlight potential areas for improvement (e.g., additional microservices, enhanced observability, advanced security measures).
-- Emphasize the flexibility and scalability the current design offers for future growth.
+## Conclusion & Future Work
+- Highlight potential areas for improvement (e.g., additional microservices, enhanced observability, advanced security measures). xxx
+
+The resource intensive AI microservices can easily be extended to allow for more functionality in the webapp. If a new frontend is desired, nuxt can be easily swapped for another framework without without affecting the AI microservices.
 
 ## Getting Started (Optional)
 - **Prerequisites:** Tools and versions required.
@@ -72,8 +72,7 @@ Generates audio narrations from given text, returning audio.
 * Docker
 * Web Browser
 - **Installation & Deployment Instructions:** Steps to run locally or deploy to Kubernetes.
-* Run bash script in deployment/scripts/start.sh
+* cd deployment/scripts
+* Run bash script in ./start.sh
 
-* Create a table called logs in mydb with the following command:
-CREATE TABLE logs ( id SERIAL PRIMARY KEY, message TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
 **Happy coding!** ✨
