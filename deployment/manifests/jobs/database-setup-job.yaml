@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-setup-job
+  namespace: bslab
+spec:
+  template:
+    metadata:
+      name: db-setup-pod
+    spec:
+      containers:
+      - name: db-setup
+        image: postgres:13
+        env:
+          - name: PGPASSWORD
+            value: "password"
+        command: ["psql"]
+        args:
+          [
+            "-h", "database-service",
+            "-U", "user",
+            "-d", "mydb",
+            "-c", "CREATE TABLE IF NOT EXISTS logs (id SERIAL PRIMARY KEY, message TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);"
+          ]
+      restartPolicy: Never

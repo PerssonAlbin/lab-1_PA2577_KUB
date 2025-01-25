@@ -29,6 +29,7 @@ echo "Applying Kubernetes manifests..."
 kubectl apply -f deployment/manifests/deployments -n bslab
 kubectl apply -f deployment/manifests/services -n bslab
 kubectl apply -f deployment/manifests/storage -n bslab
+kubectl apply -f deployment/manifests/jobs -n bslab
 echo "Started successfully!"
 
 # kubectl get all -n bslab
