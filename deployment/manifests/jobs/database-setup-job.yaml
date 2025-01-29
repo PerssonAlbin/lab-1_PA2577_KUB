@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-setup-job
+  name: database-setup-job
   namespace: bslab
 spec:
   template:
     metadata:
-      name: db-setup-pod
+      name: database-setup-pod
     spec:
       containers:
       - name: db-setup
