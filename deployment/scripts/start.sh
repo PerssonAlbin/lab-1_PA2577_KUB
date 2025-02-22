@@ -26,8 +26,8 @@ kubectl get namespace bslab >/dev/null 2>&1 || kubectl create namespace bslab
 
 # Apply Kubernetes manifests
 echo "Applying Kubernetes manifests..."
-kubectl apply -f deployment/manifests/deployments -n bslab
 kubectl apply -f deployment/manifests/services -n bslab
+kubectl apply -f deployment/manifests/deployments -n bslab
 kubectl apply -f deployment/manifests/storage -n bslab
 kubectl apply -f deployment/manifests/jobs -n bslab
 echo "Started successfully!"
